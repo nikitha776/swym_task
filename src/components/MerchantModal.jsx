@@ -1,5 +1,6 @@
 import React from 'react';
-import { evaluateMerchantRisk } from '../utils/churnRules';
+import { evaluateMerchantRisk } from '../utils/churnRules.js';
+import { getMerchantDisplayName, getMerchantEmail, getMerchantCategory } from '../utils/merchantDisplay.js';
 
 export default function MerchantModal({ merchant, onClose }) {
   if (!merchant) return null;
@@ -26,7 +27,7 @@ export default function MerchantModal({ merchant, onClose }) {
         <div className="flex justify-between items-start px-8 py-6 border-b border-slate-800/80">
           <div>
             <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Explainable Risk Breakdown</span>
-            <h2 className="text-2xl font-bold text-white mt-1">{merchant.businessName}</h2>
+            <h2 className="text-2xl font-bold text-white mt-1">{getMerchantDisplayName(merchant)}</h2>
           </div>
           <button className="text-slate-400 hover:text-white bg-slate-800/50 hover:bg-slate-800 p-2 rounded-xl border border-slate-700/30 transition-colors cursor-pointer" onClick={onClose} aria-label="Close modal">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -43,7 +44,7 @@ export default function MerchantModal({ merchant, onClose }) {
             <div className="flex flex-col text-center md:text-left">
               <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Overall Risk Profile</span>
               <span className="text-3xl font-extrabold tracking-tight mt-1">{riskData.riskLevel} Risk</span>
-              <span className="text-xs text-slate-500 mt-1">Country: {merchant.country} • Plan: {merchant.planName}</span>
+              <span className="text-xs text-slate-500 mt-1">Country: {merchant.country || 'Unknown'} • Plan: {merchant.planName || 'Basic Shopify'} • Category: {getMerchantCategory(merchant)}</span>
             </div>
 
             {/* Gauge */}
@@ -82,7 +83,7 @@ export default function MerchantModal({ merchant, onClose }) {
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-bold text-slate-500 uppercase">Contact Email</span>
-              <span className="text-sm font-semibold text-slate-300 truncate mt-1">{merchant.primaryEmail}</span>
+              <span className="text-sm font-semibold text-slate-300 truncate mt-1">{getMerchantEmail(merchant)}</span>
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-bold text-slate-500 uppercase">Last Active Date</span>

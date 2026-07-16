@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { initialMerchants } from './utils/sampleData';
-import { evaluateMerchantRisk, ANCHOR_DATE_STR } from './utils/churnRules';
+import { evaluateMerchantRisk, ANCHOR_DATE_STR } from './utils/churnRules.js';
+import { getMerchantDisplayName, getMerchantEmail, getMerchantCategory } from './utils/merchantDisplay.js';
 import SummaryCards from './components/SummaryCards';
 import MerchantTable from './components/MerchantTable';
 import MerchantModal from './components/MerchantModal';
@@ -81,11 +82,15 @@ export default function App() {
   };
 
   // Filter merchants based on search query and risk levels
+  const normalizedQuery = searchQuery.trim().toLowerCase();
   const filteredMerchants = merchants.filter((merchant) => {
+    const businessName = getMerchantDisplayName(merchant);
+    const primaryEmail = getMerchantEmail(merchant);
+    const category = getMerchantCategory(merchant);
     const matchesSearch =
-      merchant.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      merchant.primaryEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      merchant.category.toLowerCase().includes(searchQuery.toLowerCase());
+      businessName.toLowerCase().includes(normalizedQuery) ||
+      primaryEmail.toLowerCase().includes(normalizedQuery) ||
+      category.toLowerCase().includes(normalizedQuery);
 
     if (riskFilter === 'all') return matchesSearch;
     const evaluated = evaluateMerchantRisk(merchant);

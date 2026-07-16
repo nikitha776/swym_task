@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { evaluateMerchantRisk } from '../utils/churnRules';
+import { evaluateMerchantRisk } from '../utils/churnRules.js';
+import { getMerchantDisplayName, getMerchantEmail, getMerchantCategory } from '../utils/merchantDisplay.js';
 
 export default function MerchantTable({ merchants, onViewDetails, onEdit, onDelete }) {
   const [sortField, setSortField] = useState('score');
@@ -31,9 +32,9 @@ export default function MerchantTable({ merchants, onViewDetails, onEdit, onDele
   const sortedMerchants = [...evaluatedMerchants].sort((a, b) => {
     let comparison = 0;
     if (sortField === 'name') {
-      comparison = a.businessName.localeCompare(b.businessName);
+      comparison = getMerchantDisplayName(a).localeCompare(getMerchantDisplayName(b));
     } else if (sortField === 'category') {
-      comparison = a.category.localeCompare(b.category);
+      comparison = getMerchantCategory(a).localeCompare(getMerchantCategory(b));
     } else if (sortField === 'score') {
       comparison = a.riskScore - b.riskScore;
     } else if (sortField === 'lastActive') {
@@ -54,11 +55,13 @@ export default function MerchantTable({ merchants, onViewDetails, onEdit, onDele
     // Find active signals (points > 0)
     const activeSignals = signals.filter(s => s.points > 0);
     if (activeSignals.length === 0) return 'Healthy (No risks)';
-    
+
     // Sort descending by weightedPoints
     const topSignal = [...activeSignals].sort((a, b) => b.weightedPoints - a.weightedPoints)[0];
     return `${topSignal.name} (${topSignal.value})`;
   };
+
+  const safeCategory = (merchant) => getMerchantCategory(merchant);
 
   return (
     <div className="w-full bg-slate-900/40 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-2xl overflow-hidden mb-12">
@@ -105,15 +108,15 @@ export default function MerchantTable({ merchants, onViewDetails, onEdit, onDele
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
                         <span className="font-semibold text-white group-hover:text-indigo-400 transition-colors">
-                          {merchant.businessName}
+                          {getMerchantDisplayName(merchant)}
                         </span>
-                        <span className="text-xs text-slate-500">{merchant.primaryEmail}</span>
+                        <span className="text-xs text-slate-500">{getMerchantEmail(merchant)}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col">
-                        <span className="text-slate-300 font-medium">{merchant.category}</span>
-                        <span className="text-[10px] text-slate-500">{merchant.planName}</span>
+                        <span className="text-slate-300 font-medium">{safeCategory(merchant)}</span>
+                        <span className="text-[10px] text-slate-500">{merchant.planName || 'Basic Shopify'}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">

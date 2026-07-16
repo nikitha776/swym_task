@@ -468,5 +468,101 @@ export const initialMerchants = [
       avgResolutionTimeHrs: 30.0,
       csatScore: 3
     }
+  },
+  {
+    id: "merch-16",
+    name: "Northstar Labs",
+    email: "ops@northstarlabs.com",
+    category: "SaaS",
+    country: "DE",
+    planName: "Shopify Plus",
+    createdAt: "2024-11-01T09:00:00Z",
+    metrics: {
+      gmv: 88000.00,
+      gmvDeclineRate: 6.0,
+      transactionCount: 910,
+      averageOrderValue: 96.70,
+      failedTransactionRate: 0.9
+    },
+    riskAndDisputes: {
+      chargebackRate: 0.11,
+      refundRate: 1.20,
+      disputedAmount: 150.00
+    },
+    ecosystem: {
+      activeAppCount: 8,
+      webhookDeliverySuccessRate: 99.4,
+      apiErrorCount: 6
+    },
+    engagement: {
+      lastLoginDate: "2026-07-14T08:10:00Z",
+      supportTickets30d: 2,
+      avgResolutionTimeHrs: 10.0,
+      csatScore: 4
+    }
+  },
+  {
+    id: "merch-17",
+    businessName: "Harbor Market",
+    primaryEmail: "care@harbormarket.com",
+    category: "Food & Beverage",
+    country: "AU",
+    planName: "Razorpay Pro",
+    createdAt: "2023-07-20T12:45:00Z",
+    metrics: {
+      gmv: 21000.00,
+      gmvDeclineRate: 24.0,
+      transactionCount: 300,
+      averageOrderValue: 70.00,
+      failedTransactionRate: 3.8
+    },
+    riskAndDisputes: {
+      chargebackRate: 0.75,
+      refundRate: 4.20,
+      disputedAmount: 280.00
+    },
+    ecosystem: {
+      activeAppCount: 6,
+      webhookDeliverySuccessRate: 96.8,
+      apiErrorCount: 30
+    },
+    engagement: {
+      lastLoginDate: "2026-07-11T17:30:00Z",
+      supportTickets30d: 4,
+      avgResolutionTimeHrs: 40.0,
+      csatScore: 3
+    }
+  },
+  {
+    id: "merch-18",
+    businessName: "Evergreen Goods",
+    primaryEmail: "hello@evergreengoods.com",
+    category: "Home & Living",
+    country: "FR",
+    planName: "Shopify Pro",
+    createdAt: "2022-09-09T07:20:00Z",
+    metrics: {
+      gmv: 46000.00,
+      gmvDeclineRate: 48.0,
+      transactionCount: 600,
+      averageOrderValue: 76.67,
+      failedTransactionRate: 5.8
+    },
+    riskAndDisputes: {
+      chargebackRate: 1.02,
+      refundRate: 7.40,
+      disputedAmount: 620.00
+    },
+    ecosystem: {
+      activeAppCount: 10,
+      webhookDeliverySuccessRate: 93.0,
+      apiErrorCount: 88
+    },
+    engagement: {
+      lastLoginDate: "2026-07-04T10:05:00Z",
+      supportTickets30d: 7,
+      avgResolutionTimeHrs: 90.0,
+      csatScore: 2
+    }
   }
 ];

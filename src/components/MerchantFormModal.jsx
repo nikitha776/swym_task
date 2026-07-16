@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ANCHOR_DATE_STR } from '../utils/churnRules';
+import { ANCHOR_DATE_STR } from '../utils/churnRules.js';
+import { getMerchantDisplayName, getMerchantEmail } from '../utils/merchantDisplay.js';
 
 export default function MerchantFormModal({ merchant, onClose, onSave }) {
   const [formData, setFormData] = useState({
@@ -39,8 +40,8 @@ export default function MerchantFormModal({ merchant, onClose, onSave }) {
   useEffect(() => {
     if (merchant) {
       setFormData({
-        businessName: merchant.businessName || '',
-        primaryEmail: merchant.primaryEmail || '',
+        businessName: getMerchantDisplayName(merchant),
+        primaryEmail: getMerchantEmail(merchant),
         category: merchant.category || 'Retail',
         country: merchant.country || 'US',
         planName: merchant.planName || 'Basic Shopify',

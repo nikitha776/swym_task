@@ -19,25 +19,43 @@ export default function App() {
 
   // Load data from localStorage or initial sample data on mount
   useEffect(() => {
-    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    let savedData = null;
+    try {
+      savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    } catch (e) {
+      console.warn('localStorage is not accessible:', e);
+    }
+
     if (savedData) {
       try {
         setMerchants(JSON.parse(savedData));
       } catch (e) {
         console.error('Failed to parse localStorage merchant data. Falling back to sample data.', e);
         setMerchants(initialMerchants);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialMerchants));
+        try {
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialMerchants));
+        } catch (err) {
+          console.warn('localStorage write failed:', err);
+        }
       }
     } else {
       setMerchants(initialMerchants);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialMerchants));
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialMerchants));
+      } catch (err) {
+        console.warn('localStorage write failed:', err);
+      }
     }
   }, []);
 
   // Save data to localStorage
   const saveToLocalStorage = (updatedList) => {
     setMerchants(updatedList);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedList));
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedList));
+    } catch (e) {
+      console.warn('localStorage write failed:', e);
+    }
   };
 
   // Create or Update merchant
